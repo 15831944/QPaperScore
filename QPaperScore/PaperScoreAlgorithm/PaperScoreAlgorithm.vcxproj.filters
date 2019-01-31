@@ -24,6 +24,9 @@
     <ClInclude Include="ScoreDll.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="cvAlgorithm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PaperScoreAlgorithm.cpp">
@@ -33,6 +36,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ScoreDll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cvAlgorithm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

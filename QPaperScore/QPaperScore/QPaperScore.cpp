@@ -36,6 +36,7 @@ void QPaperScore::initUI()
 	//ui.comboBox_Algorithm->addItem("平均哈希算法");
 	//ui.comboBox_Algorithm->addItem("感知哈希算法");
 	ui.comboBox_Algorithm->addItem("指纹算法");
+	ui.comboBox_Algorithm->addItem("余弦算法");
 	//ui.comboBox_Algorithm->setCurrentIndex(2);
 }
 
@@ -47,20 +48,20 @@ void QPaperScore::doCal()
 		aszTemplate.push_back((const char *)ui.tableWidget_Template->item(i, 0)->text().toLocal8Bit());
 	}
 	//aszTemplate.push_back("f:\\testpng\\tt.png");
-	std::vector<std::string> aszPaper;
+	std::vector<stPaper> aszPaper;
 	for (auto i = 0; i < ui.tableWidget_Paper->rowCount(); i++)
 	{
-		aszPaper.push_back((const char *)ui.tableWidget_Paper->item(i, 0)->text().toLocal8Bit());
+		aszPaper.push_back(stPaper((const char *)ui.tableWidget_Paper->item(i, 0)->text().toLocal8Bit(),0.0));
 	}
 	//aszPaper.push_back("f:\\testpng\\allstar.jpg");
-	auto p = std::make_unique<CPaperScoreMatchAndHash>(aszTemplate, aszPaper, "",2);
+	auto p = std::make_unique<CPaperScoreMatchAndHash>(aszTemplate, aszPaper, "",ui.comboBox_Algorithm->currentIndex()+2);
 	auto res = p->doIt();
-	auto adScore = p->GetScore();
+	auto arrPaper = p->GetPaperInfo();
 	auto index = 0;
-	for (auto score : adScore)
+	for (auto paper : arrPaper)
 	{
 		QString str;
-		str.sprintf("%.2f", score);
+		str.sprintf("%.2f", paper.dScore);
 		ui.tableWidget_Paper->setItem(index, 1, new QTableWidgetItem(str));
 		index++;
 	}
