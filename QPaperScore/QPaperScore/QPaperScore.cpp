@@ -2,8 +2,13 @@
 #include "QPaperScore.h"
 #include <memory>
 #include "../PaperScoreAlgorithm/ScoreDll.h"
+#include "../QtPicture/QtPicture.h"
+#include <QProgressDialog>
+#include "QWaitDialog.h"
+#include <direct.h> 
+#include "PublicFunction.h"
 QPaperScore::QPaperScore(QWidget *parent)
-	: QMainWindow(parent)
+	: QMainWindow(parent), m_IsSet(true)
 {
 	ui.setupUi(this);
 	initUI();
@@ -15,10 +20,43 @@ QPaperScore::QPaperScore(QWidget *parent)
 	connect(ui.pushButton_DelPaper, &QPushButton::clicked, this, &QPaperScore::doDelPaper);
 	connect(ui.pushButton_ClearPaper, &QPushButton::clicked, this, &QPaperScore::doClearPaper);
 	connect(ui.pushButton_Export, &QPushButton::clicked, this, &QPaperScore::doExport);
+	connect(ui.tableWidget_Paper, &QTableWidget::cellClicked, this, &QPaperScore::doPreview);
+	connect(ui.pushButton_reset, &QPushButton::clicked, this, &QPaperScore::settoSetMode);
+	setmode();
+}
+QPaperScore::~QPaperScore()
+{
+	removeResult();
+}
+void QPaperScore::settoSetMode()
+{
+	m_IsSet = true;
+	setmode();
+	ui.tabWidget_Result->clear();
+}
+void QPaperScore::settoPreviewMode()
+{
+	m_IsSet = false;
+	setmode();
+}
+void QPaperScore::setmode()
+{
+	ui.groupBox_ReulstPreview->setEnabled(!m_IsSet);
+	ui.groupBox->setEnabled(m_IsSet);
+	ui.pushButton_AddPaper->setEnabled(m_IsSet);
+	ui.pushButton_ClearPaper->setEnabled(m_IsSet);
+	ui.pushButton_DelPaper->setEnabled(m_IsSet);
+	
+}
+void QPaperScore::removeResult()
+{
+	DelDir("temp");
+
 }
 
 void QPaperScore::initUI()
 {
+	this->setWindowTitle("图纸打分Demo");
 	ui.tableWidget_Template->setColumnCount(1);
 	QStringList headlist;
 	headlist << "路径";
@@ -42,6 +80,16 @@ void QPaperScore::initUI()
 
 void QPaperScore::doCal()
 {
+	removeResult();
+	if ((ui.tableWidget_Template->rowCount() < 1) || (ui.tableWidget_Paper->rowCount() < 1))
+	{
+		QMessageBox a(QMessageBox::Warning,"提示","未选择模板或图纸");
+		a.exec();
+		return;
+	}
+	QWaitDialog dlg;
+	dlg.show();
+	QCoreApplication::processEvents();
 	std::vector<std::string> aszTemplate;
 	for (auto i = 0; i < ui.tableWidget_Template->rowCount(); i++)
 	{
@@ -66,6 +114,7 @@ void QPaperScore::doCal()
 		index++;
 	}
 	//p->doWrite();
+	settoPreviewMode();
 }
 
 void QPaperScore::doAddTemplate()
@@ -129,5 +178,37 @@ void QPaperScore::doExport()
 			f.write(str);
 		}
 		f.close();
+	}
+}
+
+void QPaperScore::doPreview(int nRow)
+{
+	if (m_IsSet)
+		return;
+	ui.tabWidget_Result->clear();
+	for (auto i = 0; i < ui.tableWidget_Template->rowCount(); i++)
+	{
+		QString str;
+		str.sprintf("模板%d匹配结果", i+1);
+		auto pw = new QWidget();
+		ui.tabWidget_Result->addTab(pw, str);
+		auto p = new QtPicture(this, ui.tableWidget_Template->item(i, 0)->text());
+		auto layout = new QGridLayout(pw);
+		auto gp1 = new QGroupBox("模板");
+		layout->addWidget(gp1, 0, 0);
+		auto gp1layout = new QGridLayout(gp1);
+		gp1layout->addWidget(p, 0, 0);
+		str.sprintf("temp\\%d_%d.png", nRow, i);
+		QDir dir;
+		if (dir.exists(str))
+		{
+			auto gp2 = new QGroupBox("结果");
+			layout->addWidget(gp2, 0, 1);
+			auto gp2layout = new QGridLayout(gp2);
+			
+			auto r = new QtPicture(this, str);
+			gp2layout->addWidget(r, 0, 0);
+		}
+		
 	}
 }

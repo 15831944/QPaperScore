@@ -1,7 +1,7 @@
 #include "cvAlgorithm.h"
 namespace cvAlgorithm
 {
-	int matchmethod(Mat &img, Mat &templ, Mat &result, int match_method)
+	int matchmethod(Mat &img, Mat &templ, Mat &result, Mat &presult ,int match_method)
 	{
 		/// 将被显示的原图像
 		Mat img_display;
@@ -34,9 +34,9 @@ namespace cvAlgorithm
 		}
 
 		/// 最终结果
-		//rectangle(img_display, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
+		rectangle(img_display, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar(255,0,0,0), 2, 8, 0);
 		//rectangle(result, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
-
+		img_display.copyTo(presult);
 		//imshow("1", img_display);
 		//imshow("2", result);
 		//waitKey(0);

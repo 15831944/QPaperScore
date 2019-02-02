@@ -66,7 +66,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);D:\opencv\opencv\build\x64\vc14\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>PaperScoreAlgorithm.lib;opencv_world345d.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Qmld.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>QtPicture.lib;PaperScoreAlgorithm.lib;opencv_world345d.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Qmld.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Qt5XmlPatternsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
@@ -121,7 +121,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PublicFunction.cpp" />
     <ClCompile Include="QPaperScore.cpp" />
+    <ClCompile Include="QWaitDialog.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -129,10 +131,16 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QPaperScore.h" />
+    <QtMoc Include="QWaitDialog.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">d:\opencv\opencv\build\include;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">d:\opencv\opencv\build\include;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtXmlPatterns</IncludePath>
+    </QtMoc>
+    <ClInclude Include="PublicFunction.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QPaperScore.ui" />
+    <QtUic Include="WaitDialog.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="QPaperScore.qrc" />

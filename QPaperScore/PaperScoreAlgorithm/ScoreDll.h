@@ -46,6 +46,7 @@ public:
 		return m_aszPaper;
 	}
 
+
 };
 
 //模板匹配实现打分

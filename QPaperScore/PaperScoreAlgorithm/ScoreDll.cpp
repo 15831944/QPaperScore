@@ -1,7 +1,9 @@
 
 #include "ScoreDll.h"
+#include <direct.h>
 #include "cvAlgorithm.h"
 using namespace cvAlgorithm;
+
 CPaperScoreBase::CPaperScoreBase(std::vector<stPaper> aszPaper, std::string filename)
 	:m_aszPaper(aszPaper), m_filename(filename)
 {
@@ -26,15 +28,22 @@ CPaperScoreMatchAndHash::~CPaperScoreMatchAndHash()
 
 int CPaperScoreMatchAndHash::doIt()
 {
+	_mkdir("temp");
+	auto p = 0;
 	for (auto &paper : m_aszPaper)
 	{
 		auto nScore = 0.0;
 		auto matpaper = cv::imread(paper.szPaper.c_str());
+		auto t = 0;
 		for (auto &templatepath : m_aszTemplate)
 		{
-			Mat matresult;
+			Mat matresult,matpresult;
 			auto mattemplate = cv::imread(templatepath.c_str());
-			matchmethod(matpaper, mattemplate, matresult, CV_TM_SQDIFF);
+			matchmethod(matpaper, mattemplate, matresult, matpresult, CV_TM_SQDIFF);
+			
+			char s[1024] = { 0 };
+			sprintf_s(s, 1024, "temp\\%d_%d.png", p, t);
+			cv::imwrite(s, matpresult);
 			switch (m_nMethod)
 			{
 			case 0:
@@ -52,10 +61,11 @@ int CPaperScoreMatchAndHash::doIt()
 			default:
 				break;
 			}
+			t++;
 			
 		}
 		paper.dScore = nScore / m_aszTemplate.size();
-		
+		p++;
 	}	    
 	return 0;
 }

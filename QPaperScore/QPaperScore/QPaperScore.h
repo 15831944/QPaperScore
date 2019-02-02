@@ -9,7 +9,7 @@ class QPaperScore : public QMainWindow
 
 public:
 	QPaperScore(QWidget *parent = Q_NULLPTR);
-
+	virtual ~QPaperScore();
 private:
 	Ui::QPaperScoreClass ui;
 
@@ -27,4 +27,13 @@ public:
 	void doClearPaper();
 	void doCal();
 	void doExport();
+
+	void doPreview(int nRow);
+
+protected:
+	bool m_IsSet;//设置模式还是预览模式
+	void setmode();
+	void settoSetMode();
+	void settoPreviewMode();
+	void removeResult();
 };

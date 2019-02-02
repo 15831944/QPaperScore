@@ -4,7 +4,7 @@
 using namespace cv;
 namespace cvAlgorithm
 {
-	int matchmethod(Mat &img, Mat &templ, Mat &result, int match_method);
+	int matchmethod(Mat &img, Mat &templ, Mat &result, Mat &presult, int match_method);
 	//平均哈希
 	double aHash(Mat matSrc1, Mat matSrc2, int nRow, int nCol);
 	//感知哈希

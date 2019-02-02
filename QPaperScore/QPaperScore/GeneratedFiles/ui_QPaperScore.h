@@ -19,11 +19,9 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -41,6 +39,7 @@ public:
     QPushButton *pushButton_ClearPaper;
     QPushButton *pushButton_Export;
     QTableWidget *tableWidget_Paper;
+    QPushButton *pushButton_reset;
     QGroupBox *groupBox;
     QGridLayout *gridLayout;
     QPushButton *pushButton_DelTemplate;
@@ -49,15 +48,15 @@ public:
     QPushButton *pushButton_ClearTemplate;
     QLabel *label;
     QComboBox *comboBox_Algorithm;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
-    QStatusBar *statusBar;
+    QGroupBox *groupBox_ReulstPreview;
+    QGridLayout *gridLayout_4;
+    QTabWidget *tabWidget_Result;
 
     void setupUi(QMainWindow *QPaperScoreClass)
     {
         if (QPaperScoreClass->objectName().isEmpty())
             QPaperScoreClass->setObjectName(QStringLiteral("QPaperScoreClass"));
-        QPaperScoreClass->resize(677, 400);
+        QPaperScoreClass->resize(781, 614);
         centralWidget = new QWidget(QPaperScoreClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_2 = new QGridLayout(centralWidget);
@@ -93,12 +92,17 @@ public:
         pushButton_Export = new QPushButton(groupBox_2);
         pushButton_Export->setObjectName(QStringLiteral("pushButton_Export"));
 
-        gridLayout_3->addWidget(pushButton_Export, 1, 4, 1, 1);
+        gridLayout_3->addWidget(pushButton_Export, 1, 5, 1, 1);
 
         tableWidget_Paper = new QTableWidget(groupBox_2);
         tableWidget_Paper->setObjectName(QStringLiteral("tableWidget_Paper"));
 
-        gridLayout_3->addWidget(tableWidget_Paper, 0, 0, 1, 5);
+        gridLayout_3->addWidget(tableWidget_Paper, 0, 0, 1, 6);
+
+        pushButton_reset = new QPushButton(groupBox_2);
+        pushButton_reset->setObjectName(QStringLiteral("pushButton_reset"));
+
+        gridLayout_3->addWidget(pushButton_reset, 1, 4, 1, 1);
 
 
         gridLayout_2->addWidget(groupBox_2, 1, 1, 1, 1);
@@ -142,21 +146,29 @@ public:
 
         gridLayout_2->addWidget(groupBox, 1, 0, 1, 1);
 
+        groupBox_ReulstPreview = new QGroupBox(centralWidget);
+        groupBox_ReulstPreview->setObjectName(QStringLiteral("groupBox_ReulstPreview"));
+        gridLayout_4 = new QGridLayout(groupBox_ReulstPreview);
+        gridLayout_4->setSpacing(6);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        tabWidget_Result = new QTabWidget(groupBox_ReulstPreview);
+        tabWidget_Result->setObjectName(QStringLiteral("tabWidget_Result"));
+        tabWidget_Result->setMinimumSize(QSize(0, 300));
+
+        gridLayout_4->addWidget(tabWidget_Result, 0, 0, 1, 1);
+
+
+        gridLayout_2->addWidget(groupBox_ReulstPreview, 2, 0, 1, 2);
+
         gridLayout_2->setColumnStretch(0, 1);
         gridLayout_2->setColumnStretch(1, 2);
         QPaperScoreClass->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(QPaperScoreClass);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 677, 23));
-        QPaperScoreClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(QPaperScoreClass);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        QPaperScoreClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(QPaperScoreClass);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        QPaperScoreClass->setStatusBar(statusBar);
 
         retranslateUi(QPaperScoreClass);
+
+        tabWidget_Result->setCurrentIndex(-1);
+
 
         QMetaObject::connectSlotsByName(QPaperScoreClass);
     } // setupUi
@@ -170,11 +182,13 @@ public:
         pushButton_Goal->setText(QApplication::translate("QPaperScoreClass", "\346\211\223\345\210\206", Q_NULLPTR));
         pushButton_ClearPaper->setText(QApplication::translate("QPaperScoreClass", "\346\270\205\347\251\272", Q_NULLPTR));
         pushButton_Export->setText(QApplication::translate("QPaperScoreClass", "\345\257\274\345\207\272CSV", Q_NULLPTR));
+        pushButton_reset->setText(QApplication::translate("QPaperScoreClass", "\351\207\215\346\226\260\350\256\276\347\275\256", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("QPaperScoreClass", "\346\250\241\346\235\277", Q_NULLPTR));
         pushButton_DelTemplate->setText(QApplication::translate("QPaperScoreClass", "\345\210\240\351\231\244", Q_NULLPTR));
         pushButton_AddTemplate->setText(QApplication::translate("QPaperScoreClass", "\346\267\273\345\212\240", Q_NULLPTR));
         pushButton_ClearTemplate->setText(QApplication::translate("QPaperScoreClass", "\346\270\205\347\251\272", Q_NULLPTR));
         label->setText(QApplication::translate("QPaperScoreClass", "\347\256\227\346\263\225\357\274\232", Q_NULLPTR));
+        groupBox_ReulstPreview->setTitle(QApplication::translate("QPaperScoreClass", "\351\242\204\350\247\210\357\274\210\345\217\214\345\207\273\345\217\257\346\224\276\345\244\247\357\274\211", Q_NULLPTR));
     } // retranslateUi
 
 };
