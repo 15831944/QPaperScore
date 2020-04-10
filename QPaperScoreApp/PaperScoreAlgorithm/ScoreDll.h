@@ -1,10 +1,22 @@
 #ifndef SCOREDLL_H
 #define SCOREDLL_H
 
-#ifdef PAPERSCOREALGORITHM_EXPORTS
-#define DLL_IMOREX __declspec(dllexport)
+#ifdef _MSC_VER
+    #ifdef PAPERSCOREALGORITHM_EXPORTS
+        #define DLL_IMOREX _declspec(dllexport)
+    #else
+        #define DLL_IMOREX _declspec(dllimport)
+    #endif
 #else
-#define DLL_IMOREX __declspec(dllimport)
+    #ifdef __GNUC__ >= 4
+        #ifdef PAPERSCOREALGORITHM_EXPORTS
+            #define DLL_IMOREX __attribute__((visibility("default")))
+        #else
+            #define DLL_IMOREX __attribute__((visibility("hidden")))
+        #endif
+    #else
+        #define DLL_IMOREX
+    #endif
 #endif
 
 #include <vector>

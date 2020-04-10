@@ -1,5 +1,6 @@
-#pragma once
-
+#ifndef _QPAPERSCORE_H
+#define _QPAPERSCORE_H
+#include <QtWidgets>
 #include <QtWidgets/QMainWindow>
 #include "ui_QPaperScore.h"
 
@@ -37,3 +38,5 @@ protected:
 	void settoPreviewMode();
 	void removeResult();
 };
+
+#endif

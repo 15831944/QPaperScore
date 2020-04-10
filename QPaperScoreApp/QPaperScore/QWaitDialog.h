@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _QWAITDIALOG_H
+#define _QWAITDIALOG_H
 
 #include <QtWidgets/QMainWindow>
 #include "ui_WaitDialog.h"
@@ -13,3 +14,5 @@ public:
 private:
 	Ui::Dialog ui;
 };
+
+#endif

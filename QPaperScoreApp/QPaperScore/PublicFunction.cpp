@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "PublicFunction.h"
 
 bool DelDir(const QString &path)
